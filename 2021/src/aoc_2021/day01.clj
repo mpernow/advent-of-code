@@ -4,7 +4,7 @@
 (defn parse-measurements [input]
   (->> (slurp input)
        (str/split-lines)
-       (map #(Integer/parseInt %))))
+       (map read-string)))
 
 (defn part1 [input_file]
   (->> (parse-measurements input_file)
