@@ -1,5 +1,9 @@
+import pathlib
+
+INPUT_PATH = pathlib.Path(__file__).parent.parent.parent / "input"
+
 def part1():
-    with open("/home/marcus/SynologyDrive/programming/advent-of-code/2024/input/01") as f:
+    with open(INPUT_PATH / "01") as f:
         data = f.readlines()
     data = [line.strip("\n").split(" ") for line in data]
     list1 = [int(line[0]) for line in data]
@@ -15,7 +19,7 @@ def part1():
     print(diff)
 
 def part2():
-    with open("/home/marcus/SynologyDrive/programming/advent-of-code/2024/input/01") as f:
+    with open(INPUT_PATH / "01") as f:
         data = f.readlines()
     data = [line.strip("\n").split(" ") for line in data]
     list1 = [int(line[0]) for line in data]
