@@ -2,6 +2,14 @@ import pathlib
 
 INPUT_PATH = pathlib.Path(__file__).parent.parent.parent / "input"
 
+
+def get_reports():
+    return [
+        [int(val) for val in report.split(" ")]
+        for report in open(INPUT_PATH / "02").read().split("\n")
+    ]
+
+
 def check_safe(report):
     offset = report[1:]
     diff = [offset[i] - report[i] for i in range(len(offset))]
@@ -12,23 +20,18 @@ def check_safe(report):
 
 
 def part1():
-    with open(INPUT_PATH / "02") as f:
-        data = f.readlines()
-    data = [[int(val) for val in line.strip("\n").split(" ")] for line in data]
-
+    reports = get_reports()
     num_safe = 0
-    for report in data:
+    for report in reports:
         if check_safe(report):
             num_safe += 1
     print(num_safe)
 
-def part2():
-    with open(INPUT_PATH / "02") as f:
-        data = f.readlines()
-    data = [[int(val) for val in line.strip("\n").split(" ")] for line in data]
 
+def part2():
+    reports = get_reports()
     num_safe = 0
-    for report in data:
+    for report in reports:
         if check_safe(report):
             num_safe += 1
         else:
