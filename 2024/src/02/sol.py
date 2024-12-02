@@ -11,35 +11,32 @@ def get_reports():
 
 
 def check_safe(report):
-    offset = report[1:]
-    diff = [offset[i] - report[i] for i in range(len(offset))]
-    if all((abs(val) > 0) and (abs(val) < 4) for val in diff):
-        if all(val >= 0 for val in diff) or all(val <= 0 for val in diff):
-            return True
+    diff = list(map(lambda x: x[1] - x[0], zip(report, report[1:])))
+    slow_change = lambda d: 0 < abs(d) < 4
+    sign = lambda d: (d > 0) - (d < 0)
+    if all(map(slow_change, diff)) and all(sign(d) == sign(diff[0]) for d in diff):
+        return True
+    return False
+
+
+def check_safe_problem_dampener(report):
+    if check_safe(report):
+        return True
+    else:
+        for i in range(len(report)):
+            if check_safe(report[:i] + report[i + 1 :]):
+                return True
     return False
 
 
 def part1():
     reports = get_reports()
-    num_safe = 0
-    for report in reports:
-        if check_safe(report):
-            num_safe += 1
-    print(num_safe)
+    print(sum(map(check_safe, reports)))
 
 
 def part2():
     reports = get_reports()
-    num_safe = 0
-    for report in reports:
-        if check_safe(report):
-            num_safe += 1
-        else:
-            for i in range(len(report)):
-                if check_safe(report[:i] + report[i+1:]):
-                    num_safe += 1
-                    break
-    print(num_safe)
+    print(sum(map(check_safe_problem_dampener, reports)))
 
 if __name__ == "__main__":
     part1()
