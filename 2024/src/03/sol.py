@@ -9,8 +9,17 @@ def get_instructions():
 
 
 def compute_multiplications(muls):
-    nums = [list(map(int, re.findall(r"\d+", instruction))) for instruction in muls]
-    return sum(map(lambda v: v[0] * v[1], nums))
+    return sum(
+        map(
+            lambda v: v[0] * v[1],
+            list(
+                map(
+                    lambda instruction: list(map(int, re.findall(r"\d+", instruction))),
+                    muls,
+                )
+            ),
+        )
+    )
 
 
 def part1():
