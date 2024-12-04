@@ -11,12 +11,8 @@ def get_wordsearch():
 def get_number_horizontal(wordsearch, row_length):
     # Use regex lookahead assertion to get overlapping
     matches = re.finditer(r"(?=(XMAS|SAMX))", wordsearch)
-    num = 0
-    for match in matches:
-        # Remove those that wrap around
-        if match.start() % row_length < row_length - 3:
-            num += 1
-    return num
+    # Only count those that are wholly inside the array
+    return sum(match.start() % row_length < row_length - 3 for match in matches)
 
 
 def get_number_vertical(wordsearch, col_length):
@@ -37,12 +33,7 @@ def get_number_vertical(wordsearch, col_length):
         + r"}X))",
         wordsearch,
     )
-    num = 0
-    for match in matches:
-        # Remove those that wrap around
-        if match.start() // col_length < col_length - 3:
-            num += 1
-    return num
+    return sum(match.start() // col_length < col_length - 3 for match in matches)
 
 
 def get_number_right_diagonal(wordsearch, row_length):
@@ -63,14 +54,11 @@ def get_number_right_diagonal(wordsearch, row_length):
         + r"}X))",
         wordsearch,
     )
-    num = 0
-    for match in matches:
-        # Remove those that wrap around
-        if (match.start() // row_length < row_length - 3) and (
-            match.start() % row_length < row_length - 3
-        ):
-            num += 1
-    return num
+    return sum(
+        (match.start() // row_length < row_length - 3)
+        and (match.start() % row_length < row_length - 3)
+        for match in matches
+    )
 
 
 def get_number_left_diagonal(wordsearch, row_length):
@@ -91,14 +79,11 @@ def get_number_left_diagonal(wordsearch, row_length):
         + r"}X))",
         wordsearch,
     )
-    num = 0
-    for match in matches:
-        # Remove those that wrap around
-        if (match.start() // row_length < row_length - 3) and (
-            match.start() % row_length > 2
-        ):
-            num += 1
-    return num
+    return sum(
+        (match.start() // row_length < row_length - 3)
+        and (match.start() % row_length > 2)
+        for match in matches
+    )
 
 
 def get_number_crosses(wordsearch, side_length):
@@ -125,13 +110,11 @@ def get_number_crosses(wordsearch, side_length):
         + r"}S.M))",
         wordsearch,
     )
-    num = 0
-    for match in matches:
-        if (match.start() // side_length < side_length - 2) and (
-            match.start() % side_length < side_length - 2
-        ):
-            num += 1
-    return num
+    return sum(
+        (match.start() // side_length < side_length - 2)
+        and (match.start() % side_length < side_length - 2)
+        for match in matches
+    )
 
 
 def part1():
