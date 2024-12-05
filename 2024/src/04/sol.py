@@ -17,20 +17,9 @@ def get_number_horizontal(wordsearch, row_length):
 
 def get_number_vertical(wordsearch, col_length):
     # Use regex lookahead assertion to get overlapping
+    num_between = col_length - 1
     matches = re.finditer(
-        r"(?=(X.{"
-        + str(col_length - 1)
-        + r"}M.{"
-        + str(col_length - 1)
-        + r"}A.{"
-        + str(col_length - 1)
-        + r"}S|S.{"
-        + str(col_length - 1)
-        + r"}A.{"
-        + str(col_length - 1)
-        + r"}M.{"
-        + str(col_length - 1)
-        + r"}X))",
+        rf"(?=(X.{{{num_between}}}M.{{{num_between}}}A.{{{num_between}}}S|S.{{{num_between}}}A.{{{num_between}}}M.{{{num_between}}}X))",
         wordsearch,
     )
     return sum(match.start() // col_length < col_length - 3 for match in matches)
@@ -38,20 +27,9 @@ def get_number_vertical(wordsearch, col_length):
 
 def get_number_right_diagonal(wordsearch, row_length):
     # Use regex lookahead assertion to get overlapping
+    num_betwen = row_length
     matches = re.finditer(
-        r"(?=(X.{"
-        + str(row_length)
-        + r"}M.{"
-        + str(row_length)
-        + r"}A.{"
-        + str(row_length)
-        + r"}S|S.{"
-        + str(row_length)
-        + r"}A.{"
-        + str(row_length)
-        + r"}M.{"
-        + str(row_length)
-        + r"}X))",
+        rf"(?=(X.{{{num_betwen}}}M.{{{num_betwen}}}A.{{{num_betwen}}}S|S.{{{num_betwen}}}A.{{{num_betwen}}}M.{{{num_betwen}}}X))",
         wordsearch,
     )
     return sum(
@@ -63,20 +41,9 @@ def get_number_right_diagonal(wordsearch, row_length):
 
 def get_number_left_diagonal(wordsearch, row_length):
     # Use regex lookahead assertion to get overlapping
+    num_between = row_length - 2
     matches = re.finditer(
-        r"(?=(X.{"
-        + str(row_length - 2)
-        + r"}M.{"
-        + str(row_length - 2)
-        + r"}A.{"
-        + str(row_length - 2)
-        + r"}S|S.{"
-        + str(row_length - 2)
-        + r"}A.{"
-        + str(row_length - 2)
-        + r"}M.{"
-        + str(row_length - 2)
-        + r"}X))",
+        rf"(?=(X.{{{num_between}}}M.{{{num_between}}}A.{{{num_between}}}S|S.{{{num_between}}}A.{{{num_between}}}M.{{{num_between}}}X))",
         wordsearch,
     )
     return sum(
@@ -87,27 +54,12 @@ def get_number_left_diagonal(wordsearch, row_length):
 
 
 def get_number_crosses(wordsearch, side_length):
+    num_between = side_length - 2
     matches = re.finditer(
-        r"(?=(M.S.{"
-        + str(side_length - 2)
-        + r"}A.{"
-        + str(side_length - 2)
-        + r"}M.S))|"
-        + r"(?=(S.S.{"
-        + str(side_length - 2)
-        + r"}A.{"
-        + str(side_length - 2)
-        + r"}M.M))|"
-        + r"(?=(M.M.{"
-        + str(side_length - 2)
-        + r"}A.{"
-        + str(side_length - 2)
-        + r"}S.S))|"
-        + r"(?=(S.M.{"
-        + str(side_length - 2)
-        + r"}A.{"
-        + str(side_length - 2)
-        + r"}S.M))",
+        rf"(?=(M.S.{{{num_between}}}A.{{{num_between}}}M.S))|"
+        + rf"(?=(S.S.{{{num_between}}}A.{{{num_between}}}M.M))|"
+        + rf"(?=(M.M.{{{num_between}}}A.{{{num_between}}}S.S))|"
+        + rf"(?=(S.M.{{{num_between}}}A.{{{num_between}}}S.M))",
         wordsearch,
     )
     return sum(
