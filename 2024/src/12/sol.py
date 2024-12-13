@@ -39,7 +39,6 @@ def part2():
     patches = get_patches(grid)
     num_corners = 0
     for s in patches:
-        # corners = set()
         num_corners_this = 0
         for p in s:
             neighbours = {
@@ -52,6 +51,7 @@ def part2():
                 p - 1: p - 1 in s,
                 p - 1 + 1j: p - 1 + 1j in s,
             }
+            # Check how many outer corners
             num_direct_neighbors = sum(
                 [
                     neighbours[p + 1],
@@ -60,7 +60,6 @@ def part2():
                     neighbours[p - 1j],
                 ]
             )
-            # Check how many outer corners
             if num_direct_neighbors == 4:
                 pass
             if num_direct_neighbors == 3:
